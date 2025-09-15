@@ -1,6 +1,6 @@
 import './App.css';
-import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
-  
+import { Route, Switch } from 'react-router-dom';
+import Home from "./screens/Home/Home"
 
 function App() {
   return (
@@ -12,6 +12,8 @@ function App() {
         <Route path="/favoritos" exact={true} ></Route>
         <Route path="/resultados-busqueda" exact={true} ></Route>
         <Route path="" component={Error}/>
+
+
       </Switch>
   );
 }
