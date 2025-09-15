@@ -12,8 +12,8 @@ function Navbar(props){
         <b><li><Link to="/vertodas">Ver Todas</Link></li></b>
 
 </ul>
-<ul class = "user">
-    <li>{props.name}<img src="./assets/img/user.jpg" alt=""/></li>
+<ul className = "user">
+    <li className = "Morza">{props.name}<img src="/img/FOTOUSER.jpeg" alt="user"/></li>
 </ul>
 </nav>
     )
