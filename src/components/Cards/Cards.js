@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import '../Cards/style.css'
 
 class Cards extends Component {
   constructor(props) {
@@ -25,9 +26,9 @@ class Cards extends Component {
 
   render() {
     return (
-      <section>
+      <section className="cardContainer">
         {this.props.peliculas.map((peli) => (
-          <div key={peli.id} >
+          <div key={peli.id} className="character-card">
             <img
               src={`https://image.tmdb.org/t/p/w342${peli.poster_path}`}
               alt={peli.title}
