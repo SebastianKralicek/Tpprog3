@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component} from "react";
+import { Link } from "react-router-dom"
 import '../Cards/style.css'
 
 class Cards extends Component {
@@ -38,7 +39,7 @@ class Cards extends Component {
             <button onClick={() => this.ocultar()}>{this.state.texto}</button>
             {this.state.descripcionVisible ? <p>{peli.overview}</p> : null}
 
-            <button>Ir a detalle</button>
+            <Link to={`/pelicula/${peli.id}`}><button>Ir a detalle</button></Link>
           </div>
         ))}
       </section>
