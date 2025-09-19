@@ -9,8 +9,21 @@ class Movies extends Component {
     this.state = {
       populares: [],
       cartelera: [],
-      error: null
+      valor: "",
+      visible: 8
     };
+  }
+
+  evitarSubmit(event){
+    event.preventDefault();
+  }
+
+  controlarCambios(event){
+    this.setState({ valor: event.target.value });
+  }
+
+  cargarMas = (total) => {
+    this.setState({ visible: total });
   }
 
   componentDidMount() {
@@ -21,51 +34,79 @@ class Movies extends Component {
         .then(res => res.json())
         .then(data => this.setState({
           cartelera: Array.isArray(data.results) ? data.results : [],
-          populares: [],
-          error: null
+          populares: []
         }))
-        .catch(error => this.setState({ error }));
-    } else { 
+        .catch(err => console.log(err));
+    } else {
       fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${APIKEY}&language=es-ES`)
         .then(res => res.json())
         .then(data => this.setState({
           populares: Array.isArray(data.results) ? data.results : [],
-          cartelera: [],
-          error: null
+          cartelera: []
         }))
-        .catch(error => this.setState({ error }));
+        .catch(err => console.log(err));
     }
   }
 
   render() {
     const { grupo } = this.props.match.params;
+    const texto = (this.state.valor || '').toLowerCase();
 
-    if (this.state.error) {
-      return (
-        <main style={{ padding: 16 }}>
-          <h2>Hubo un problema</h2>
-          <p>{String(this.state.error)}</p>
-        </main>
-      );
-    }
+    const carteleraFiltradasFull = Array.isArray(this.state.cartelera)
+      ? this.state.cartelera.filter(elm => ((elm.title || '').toLowerCase()).includes(texto))
+      : [];
+    const popularesFiltradasFull = Array.isArray(this.state.populares)
+      ? this.state.populares.filter(elm => ((elm.title || '').toLowerCase()).includes(texto))
+      : [];
+
+    const peliculasFiltradas = carteleraFiltradasFull.slice(0, this.state.visible);
+    const popularesFiltradas = popularesFiltradasFull.slice(0, this.state.visible);
 
     if (grupo === 'cartelera') {
       return (
         <main>
+          <form onSubmit={(event) => this.evitarSubmit(event)}>
+            <label>Nombre de película:</label>
+            <input
+              type="text"
+              onChange={(event) => this.controlarCambios(event)}
+              value={this.state.valor}
+            />
+            <input type="submit" value="Submit" />
+          </form>
+
           <section>
             <h2>Películas en cartelera</h2>
-            <Cards peliculas={Array.isArray(this.state.cartelera) ? this.state.cartelera : []} />
+            <Cards peliculas={peliculasFiltradas} />
           </section>
+
+          <button onClick={() => this.cargarMas(carteleraFiltradasFull.length)}>
+            Cargar más
+          </button>
         </main>
       );
     }
 
     return (
       <main>
+        <form onSubmit={(event) => this.evitarSubmit(event)}>
+          <label>Nombre de película:</label>
+          <input
+            type="text"
+            onChange={(event) => this.controlarCambios(event)}
+            value={this.state.valor}
+          />
+          <input type="submit" value="Submit" />
+        </form>
+
         <section>
           <h2>Películas más populares</h2>
-        <Cards peliculas={Array.isArray(this.state.populares) ? this.state.populares : []} />
+          <Cards peliculas={popularesFiltradas} />
         </section>
+
+        <button onClick={() => this.cargarMas(popularesFiltradasFull.length)}>
+          Cargar más
+        </button>
       </main>
     );
   }
