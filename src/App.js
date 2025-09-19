@@ -2,6 +2,8 @@ import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import Home from "./screens/Home/Home"
 import Detalle from "./screens/Detalle/Detalle"
+import SearchResults from "./screens/results/results"
+import PeliculasGrupo from "./screens/movies/movies"
 
 function App() {
   return (

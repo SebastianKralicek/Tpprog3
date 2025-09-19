@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from '../../components/Navbar/Navbar'
-import Footer from '../../components/Footer/Footer'
+import Footer from '../../components/Footer/footer'
 import Peliculas from "../../components/Peliculas/Peliculas";
 
 function Home(){

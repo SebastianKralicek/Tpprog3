@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Cards from '../Cards/Cards';
 import '../Peliculas/style.css'
+import { Link } from "react-router-dom";
 
 const APIKEY = '90331c638461ea69a8a705bce71b3fca';
 
@@ -63,16 +64,18 @@ class Peliculas extends Component {
           <input type="submit" value="Submit" />
         </form>
 
+        
+
         <section>
           <h2>Películas en cartelera</h2>
           <Cards peliculas={peliculasFiltradas.filter((peli, i) => i < 4)} />
-          <a href="/peliculas/cartelera">Ver todas</a>
+           <Link to="/peliculas/cartelera">Ver todas</Link>
         </section>
 
         <section>
           <h2>Películas más populares</h2>
           <Cards peliculas={popularesFiltradas.filter((peli, i) => i < 4)} />
-          <a href="/peliculas/populares">Ver todas</a>
+           <Link to="/peliculas/populares">Ver todas</Link>
         </section>
       </main>
     );
