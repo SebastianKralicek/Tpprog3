@@ -33,15 +33,15 @@ class Movies extends Component {
       fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${APIKEY}&language=es-ES`)
         .then(res => res.json())
         .then(data => this.setState({
-          cartelera: Array.isArray(data.results) ? data.results : [],
+          cartelera: (data && data.results) || [],
           populares: []
         }))
         .catch(err => console.log(err));
-    } else {
+    } else { 
       fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${APIKEY}&language=es-ES`)
         .then(res => res.json())
         .then(data => this.setState({
-          populares: Array.isArray(data.results) ? data.results : [],
+          populares: (data && data.results) || [],
           cartelera: []
         }))
         .catch(err => console.log(err));
@@ -50,26 +50,32 @@ class Movies extends Component {
 
   render() {
     const { grupo } = this.props.match.params;
-    const texto = (this.state.valor || '').toLowerCase();
+    const texto   = (this.state.valor || '').toLowerCase();
+    const visible = this.state.visible;
 
-    const carteleraFiltradasFull = Array.isArray(this.state.cartelera)
-      ? this.state.cartelera.filter(elm => ((elm.title || '').toLowerCase()).includes(texto))
-      : [];
-    const popularesFiltradasFull = Array.isArray(this.state.populares)
-      ? this.state.populares.filter(elm => ((elm.title || '').toLowerCase()).includes(texto))
-      : [];
+    const baseCartelera = this.state.cartelera || [];
+    const basePopulares = this.state.populares || [];
 
-    const peliculasFiltradas = carteleraFiltradasFull.slice(0, this.state.visible);
-    const popularesFiltradas = popularesFiltradasFull.slice(0, this.state.visible);
+    const carteleraFiltradasFull = baseCartelera
+      .filter(elm => ((elm.title || '').toLowerCase()).includes(texto));
+
+    const popularesFiltradasFull = basePopulares
+      .filter(elm => ((elm.title || '').toLowerCase()).includes(texto));
+
+    const peliculasFiltradas = carteleraFiltradasFull
+      .filter((_, i) => i < visible);
+
+    const popularesFiltradas = popularesFiltradasFull
+      .filter((_, i) => i < visible);
 
     if (grupo === 'cartelera') {
       return (
         <main>
-          <form onSubmit={(event) => this.evitarSubmit(event)}>
+          <form onSubmit={(e) => this.evitarSubmit(e)}>
             <label>Nombre de película:</label>
             <input
               type="text"
-              onChange={(event) => this.controlarCambios(event)}
+              onChange={(e) => this.controlarCambios(e)}
               value={this.state.valor}
             />
             <input type="submit" value="Submit" />
@@ -80,20 +86,22 @@ class Movies extends Component {
             <Cards peliculas={peliculasFiltradas} />
           </section>
 
-          <button onClick={() => this.cargarMas(carteleraFiltradasFull.length)}>
-            Cargar más
-          </button>
+          {visible < carteleraFiltradasFull.length && (
+            <button onClick={() => this.cargarMas(carteleraFiltradasFull.length)}>
+              Cargar más
+            </button>
+          )}
         </main>
       );
     }
 
     return (
       <main>
-        <form onSubmit={(event) => this.evitarSubmit(event)}>
+        <form onSubmit={(e) => this.evitarSubmit(e)}>
           <label>Nombre de película:</label>
           <input
             type="text"
-            onChange={(event) => this.controlarCambios(event)}
+            onChange={(e) => this.controlarCambios(e)}
             value={this.state.valor}
           />
           <input type="submit" value="Submit" />
@@ -104,9 +112,11 @@ class Movies extends Component {
           <Cards peliculas={popularesFiltradas} />
         </section>
 
-        <button onClick={() => this.cargarMas(popularesFiltradasFull.length)}>
-          Cargar más
-        </button>
+        {visible < popularesFiltradasFull.length && (
+          <button onClick={() => this.cargarMas(popularesFiltradasFull.length)}>
+            Cargar más
+          </button>
+        )}
       </main>
     );
   }
