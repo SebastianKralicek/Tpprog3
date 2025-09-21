@@ -7,7 +7,7 @@ class Cards extends Component {
     super(props);
     this.state = {
       descripcionVisible: false,
-      texto: "Ver descripción",
+      texto: "Ver descripción"
     };
   }
 
@@ -24,6 +24,8 @@ class Cards extends Component {
       });
     }
   }
+
+
 
   render() {
     return (

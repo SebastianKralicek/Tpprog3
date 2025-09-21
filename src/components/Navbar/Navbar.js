@@ -8,7 +8,7 @@ function Navbar(props){
 <ul class = "main-nav">
 
         <b><li><Link to="/">Home</Link></li></b>
-        <b><li><Link to="/favorites">Favoritos</Link></li></b>
+        <b><li><Link to="/favoritos">Favoritos</Link></li></b>
         <b><li><Link to="/vertodas">Ver Todas</Link></li></b>
 
 </ul>
