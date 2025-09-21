@@ -2,9 +2,9 @@ import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import Home from "./screens/Home/Home";
 import Movie from "./screens/Movie/Movie";
-import SearchResults from "./screens/Results/Results";
+import SearchResults from "./screens/Results/SearchResults";
 import Movies from "./screens/Movies/Movies";
-import Favorites from "./screens/favorites/Favorites"
+import Favorites from "./screens/Favorites/Favorites"
 
 
 function App() {

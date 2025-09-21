@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import Cards from '../Cards/Cards';
 import '../Peliculas/style.css'
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 const APIKEY = '90331c638461ea69a8a705bce71b3fca';
 
 class Peliculas extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       populares: [],
       cartelera: [],
@@ -15,13 +15,17 @@ class Peliculas extends Component {
     };
   }
 
-  evitarSubmit(event){
+  evitarSubmit(event) {
     event.preventDefault();
+    if (this.state.valor !== "") {
+      this.props.history.push(`/resultados-busqueda?query=${this.state.valor}`);
+    }
   }
 
   controlarCambios(event){
     this.setState({valor: event.target.value});
   }
+
 
   componentDidMount() {
     fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${APIKEY}&language=es-ES`)
@@ -61,10 +65,8 @@ class Peliculas extends Component {
             onChange={(event) => this.controlarCambios(event)}
             value={this.state.valor}
           />
-          <input type="submit" value="Submit" />
+          <input type="submit" value="Buscar" />
         </form>
-
-        
 
         <section>
           <h2>Películas en cartelera</h2>
@@ -82,5 +84,5 @@ class Peliculas extends Component {
   }
 }
 
-export default Peliculas;
+export default withRouter(Peliculas);
 
