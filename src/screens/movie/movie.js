@@ -5,20 +5,66 @@ class Movie extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      movie: null
+      movie: props.data || null,
+      esFavorito: false
     };
   }
 
   componentDidMount() {
-    const id = this.props.match?.params?.id;
+    const id = this.props.match?.params?.id || this.state.movie?.id;
 
-    if (id) {
+    if (!this.state.movie) {
       fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=90331c638461ea69a8a705bce71b3fca&language=es-ES`)
         .then(res => res.json())
         .then(data => {
-          this.setState({ movie: data });
+          this.setState({ movie: data }, () => {
+            this.verificarFavorito();
+          });
         })
         .catch(error => console.log("Error al cargar la película:", error));
+    } else {
+      this.verificarFavorito();
+    }
+  }
+
+  verificarFavorito() {
+    const id = this.state.movie?.id;
+    const datosEnLocalStorage = localStorage.getItem("LSFavoritos");
+
+    if (datosEnLocalStorage) {
+      const favoritos = JSON.parse(datosEnLocalStorage);
+      if (favoritos.includes(id)) {
+        this.setState({ esFavorito: true });
+      }
+    }
+  }
+
+  agregarAFavoritos() {
+    const id = this.state.movie?.id;
+    let favoritos = [];
+
+    const datosEnLocalStorage = localStorage.getItem("LSFavoritos");
+    if (datosEnLocalStorage) {
+      favoritos = JSON.parse(datosEnLocalStorage);
+    }
+
+    if (!favoritos.includes(id)) {
+      favoritos.push(id);
+      localStorage.setItem("LSFavoritos", JSON.stringify(favoritos));
+      this.setState({ esFavorito: true });
+    }
+  }
+
+  quitarDeFavoritos() {
+    const id = this.state.movie?.id;
+    let favoritos = [];
+
+    const datosEnLocalStorage = localStorage.getItem("LSFavoritos");
+    if (datosEnLocalStorage) {
+      favoritos = JSON.parse(datosEnLocalStorage);
+      favoritos = favoritos.filter(favId => favId !== id);
+      localStorage.setItem("LSFavoritos", JSON.stringify(favoritos));
+      this.setState({ esFavorito: false });
     }
   }
 
@@ -51,6 +97,17 @@ class Movie extends Component {
             <p id="votes">
               <strong>Puntuación:</strong> {pelicula.vote_average}
             </p>
+
+            {/* 🔘 Botón dinámico de favoritos */}
+            {this.state.esFavorito ? (
+              <button onClick={() => this.quitarDeFavoritos()}>
+                Quitar de favoritos
+              </button>
+            ) : (
+              <button onClick={() => this.agregarAFavoritos()}>
+                Agregar a favoritos
+              </button>
+            )}
           </section>
         </section>
       </React.Fragment>
