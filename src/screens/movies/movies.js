@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Cards from '../../components/Cards/Cards';
+import Navbar from '../../components/Navbar/Navbar';
+import Footer from '../../components/Footer/Footer';
 
 const APIKEY = '90331c638461ea69a8a705bce71b3fca';
 
@@ -22,9 +24,9 @@ class Movies extends Component {
     this.setState({ valor: event.target.value });
   }
 
-  cargarMas = (total) => {
-    this.setState({ visible: total });
-  }
+  cargarMas = () => {
+  this.setState({ visible: this.state.visible + 4 });
+}
 
   componentDidMount() {
     const { grupo } = this.props.match.params; 
@@ -32,18 +34,36 @@ class Movies extends Component {
     if (grupo === 'cartelera') {
       fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${APIKEY}&language=es-ES`)
         .then(res => res.json())
-        .then(data => this.setState({
-          cartelera: (data && data.results) || [],
-          populares: []
-        }))
+        .then(data => {
+        let resultados = [];
+        if (data) {
+            if (data.results) {
+                resultados = data.results;
+            }
+        }
+        this.setState({
+            cartelera: resultados,
+            populares: []
+        });
+        })
+
         .catch(err => console.log(err));
     } else { 
       fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${APIKEY}&language=es-ES`)
         .then(res => res.json())
-        .then(data => this.setState({
-          populares: (data && data.results) || [],
-          cartelera: []
-        }))
+        .then(data => {
+        let resultados = [];
+        if (data) {
+            if (data.results) {
+                resultados = data.results;
+            }
+        }
+        this.setState({
+            populares: resultados,
+            cartelera: []
+        });
+        })
+
         .catch(err => console.log(err));
     }
   }
@@ -63,13 +83,15 @@ class Movies extends Component {
       .filter(elm => ((elm.title || '').toLowerCase()).includes(texto));
 
     const peliculasFiltradas = carteleraFiltradasFull
-      .filter((_, i) => i < visible);
+    .filter((pelicula, i) => i < visible);
 
     const popularesFiltradas = popularesFiltradasFull
-      .filter((_, i) => i < visible);
-
+    .filter((pelicula, i) => i < visible);
+    
     if (grupo === 'cartelera') {
       return (
+        <React.Fragment>
+        <Navbar />
         <main>
           <form onSubmit={(e) => this.evitarSubmit(e)}>
             <label>Nombre de película:</label>
@@ -85,17 +107,16 @@ class Movies extends Component {
             <h2>Películas en cartelera</h2>
             <Cards peliculas={peliculasFiltradas} />
           </section>
-
-          {visible < carteleraFiltradasFull.length && (
-            <button onClick={() => this.cargarMas(carteleraFiltradasFull.length)}>
-              Cargar más
-            </button>
-          )}
+            <button onClick={() => this.cargarMas()}>Cargar más</button>         
         </main>
+        <Footer />
+        </React.Fragment>
       );
     }
 
     return (
+    <React.Fragment>
+    <Navbar />
       <main>
         <form onSubmit={(e) => this.evitarSubmit(e)}>
           <label>Nombre de película:</label>
@@ -111,13 +132,10 @@ class Movies extends Component {
           <h2>Películas más populares</h2>
           <Cards peliculas={popularesFiltradas} />
         </section>
-
-        {visible < popularesFiltradasFull.length && (
-          <button onClick={() => this.cargarMas(popularesFiltradasFull.length)}>
-            Cargar más
-          </button>
-        )}
+         <button onClick={() => this.cargarMas()}>Cargar más</button>
       </main>
+    <Footer/>
+    </React.Fragment>
     );
   }
 }
