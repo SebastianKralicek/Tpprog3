@@ -31,43 +31,43 @@ class Movies extends Component {
   this.setState({ visible: this.state.visible + 5 });
 }
 
-  componentDidMount() {
-    const { grupo } = this.props.match.params; 
-
+  fetchPeliculas(grupo) {
     if (grupo === 'cartelera') {
       fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${APIKEY}&language=es-ES`)
         .then(res => res.json())
         .then(data => {
-        let resultados = [];
-        if (data) {
-            if (data.results) {
-                resultados = data.results;
-            }
-        }
-        this.setState({
-            cartelera: resultados,
-            populares: []
-        });
+          this.setState({
+            cartelera: data.results || [],
+            populares: [],
+            visible: 5
+          });
         })
-
         .catch(err => console.log(err));
-    } else { 
+    } else {
       fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${APIKEY}&language=es-ES`)
         .then(res => res.json())
         .then(data => {
-        let resultados = [];
-        if (data) {
-            if (data.results) {
-                resultados = data.results;
-            }
-        }
-        this.setState({
-            populares: resultados,
-            cartelera: []
-        });
+          this.setState({
+            populares: data.results || [],
+            cartelera: [],
+            visible: 5
+          });
         })
-
         .catch(err => console.log(err));
+    }
+  }
+
+  componentDidMount() {
+    const { grupo } = this.props.match.params;
+    this.fetchPeliculas(grupo);
+  }
+
+  componentDidUpdate(prevProps) {
+    const prevGrupo = prevProps.match.params.grupo;
+    const actualGrupo = this.props.match.params.grupo;
+
+    if (prevGrupo !== actualGrupo) {
+      this.fetchPeliculas(actualGrupo);
     }
   }
 
