@@ -5,6 +5,7 @@ import Movie from "./screens/Movie/Movie";
 import SearchResults from "./screens/Results/SearchResults";
 import Movies from "./screens/Movies/Movies";
 import Favorites from "./screens/Favorites/Favorites"
+import NotFound from './screens/Error/NotFound';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
       <Route path="/resultados-busqueda" exact={true} component={SearchResults} />
       <Route path="/pelicula/:id" component={Movie} />
       <Route path="/peliculas/:grupo" component={Movies} />
+      <Route component={NotFound}></Route>
     </Switch>
   );
 }
