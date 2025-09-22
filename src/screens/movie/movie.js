@@ -1,50 +1,25 @@
 import React, { Component } from "react";
+import Navbar from '../../components/Navbar/Navbar';
 
 class Movie extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      esFavorito: false,
-      movie: props.data || null
+      movie: null
     };
   }
 
   componentDidMount() {
-    if (this.state.movie) return;
+    const id = this.props.match?.params?.id;
 
-    const id =
-      (this.props.match && this.props.match.params && this.props.match.params.id) ||
-      this.props.id;
-
-    fetch("https://api.themoviedb.org/3/movie/" + id + "?api_key=90331c638461ea69a8a705bce71b3fca&language=es-ES")
-      .then(function (respuesta) {
-        return respuesta.json();
-      })
-      .then(function (objetoOriginal) {
-        const texto = JSON.stringify(objetoOriginal);
-        const datos = JSON.parse(texto);
-        this.setState({ movie: datos });
-      }.bind(this))
-      .catch(function (error) {
-        console.log("Error al cargar la película:", error);
-      });
-  }
-
-  agregarAFavoritos() {
-    const id = this.state.movie?.id;
-    let favoritos = [];
-    let datosEnLocalStorage = localStorage.getItem("LSFavoritos");
-    if (datosEnLocalStorage !== null) {
-      favoritos = JSON.parse(datosEnLocalStorage);
+    if (id) {
+      fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=90331c638461ea69a8a705bce71b3fca&language=es-ES`)
+        .then(res => res.json())
+        .then(data => {
+          this.setState({ movie: data });
+        })
+        .catch(error => console.log("Error al cargar la película:", error));
     }
-
-    favoritos.push(id);
-    localStorage.setItem("LSFavoritos", JSON.stringify(favoritos));
-    this.setState({ esFavorito: true });
-  }
-
-  quitarDeFavoritos() {
-    this.setState({ esFavorito: false });
   }
 
   render() {
@@ -56,11 +31,12 @@ class Movie extends Component {
 
     return (
       <React.Fragment>
+        <Navbar />
         <h2 className="alert alert-primary">{pelicula.title}</h2>
         <section className="row">
           <img
             className="col-md-6"
-            src={"https://image.tmdb.org/t/p/w500" + pelicula.poster_path}
+            src={`https://image.tmdb.org/t/p/w500${pelicula.poster_path}`}
             alt={pelicula.title}
           />
           <section className="col-md-6 info">
@@ -75,15 +51,6 @@ class Movie extends Component {
             <p id="votes">
               <strong>Puntuación:</strong> {pelicula.vote_average}
             </p>
-            {this.state.esFavorito ? (
-              <button onClick={() => this.quitarDeFavoritos()}>
-                Quitar de favoritos
-              </button>
-            ) : (
-              <button onClick={() => this.agregarAFavoritos()}>
-                Agregar a favoritos
-              </button>
-            )}
           </section>
         </section>
       </React.Fragment>

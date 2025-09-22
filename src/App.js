@@ -4,7 +4,7 @@ import Home from "./screens/Home/Home";
 import Movie from "./screens/Movie/Movie";
 import SearchResults from "./screens/Results/SearchResults";
 import Movies from "./screens/Movies/Movies";
-import Favorites from "./screens/Favorites/Favorites"
+import Favorites from "./screens/favorites/Favorites"
 import NotFound from './screens/Error/NotFound';
 
 
