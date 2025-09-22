@@ -1,9 +1,14 @@
 footer {
-    background-color: #dedede;
+    background-color: #0f171e;
     text-align: center;
     padding: 40px 0;
-    color: #666;
+    color: #9fb3c8;
+    border-top: 1px solid rgba(255,255,255,0.06);
     position: static;
     bottom: 0;
     width: 100%;
+}
+
+footer p {
+    margin: 4px 0;
 }

@@ -14,7 +14,7 @@ function Navbar(props){
 
 </ul>
 <ul className = "user">
-    <li className = "Morza">{props.name}<img src="/img/FOTOUSER.jpeg" alt="user"/></li>
+    <li className = "Morza">{props.name}<img src="/img/FotoUser.jpg" alt="user"/></li>
 </ul>
 </nav>
     )

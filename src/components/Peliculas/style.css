@@ -1,0 +1,146 @@
+nav {
+    display: grid;
+    grid-template-columns: 1fr;
+    background-color: #0f171e;
+    border-radius: 0;
+    margin-bottom: 0;
+}
+
+.nav {
+    margin: 0 !important;
+}
+
+.nav a{
+    color: #e5e7eb;
+    text-decoration: none;
+}
+
+.nav a:hover{
+    color: #7cc5ff;
+    font-weight: bold;
+}
+
+/* Page base */
+main {
+    background-color: #0b1117;
+    color: #cbd5e1;
+    min-height: 100vh;
+    padding: 16px 24px;
+}
+
+h2 {
+    color: #e5e7eb;
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin: 12px 0 8px;
+}
+
+/* Search and filter forms */
+.search-form, .filter-form {
+    padding: .75rem 1rem;
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    column-gap: 8px;
+    background-color: #0f171e;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    margin-bottom: 16px;
+}
+
+.filter-form {
+    grid-template-columns: 1fr;
+}
+
+.search-form .btn-sm{
+    line-height: 1;
+    font-size: 0.9rem;
+}
+
+.search-form input,
+.filter-form input {
+    border: 1px solid rgba(255,255,255,0.12);
+    background-color: #0b1117;
+    color: #e5e7eb;
+    border-radius: 8px;
+    padding: 10px 12px;
+    vertical-align: middle;
+    line-height: 1.2;
+    font-size: 1rem;
+}
+
+.search-form input[type="submit"],
+.filter-form input[type="submit"],
+main input[type="submit"] {
+    border: none;
+    background-color: #1a98ff;
+    color: #fff;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .2s ease;
+}
+
+.search-form input[type="submit"]:hover,
+.filter-form input[type="submit"]:hover,
+main input[type="submit"]:hover {
+    background-color: #0f84e5;
+}
+
+.cards {
+    padding: 0.75rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 2%;
+}
+
+.cardBody {
+    margin-top: 20px;
+}
+
+.single-card-people {
+    width: 19%;
+}
+
+.single-card-movie {
+    width: 24%;
+}
+
+.single-card-playing {
+    width: 15%;
+}
+
+#now-playing .card-text{
+    height: 100px;
+    overflow: hidden;
+}
+
+.single-card-tv {
+    width: 19%;
+}
+
+.tv-show .card-text{
+    height: 100px;
+    overflow: hidden;
+}
+
+.single-card-on-air{
+    width: 15%;
+}
+
+#on-air-today .card-text{
+    height: 100px;
+    overflow: hidden;
+}
+
+.all-movies .single-card-movie {
+    width: 15%;
+}
+
+/* Responsive nav grid */
+@media(min-width: 765px){
+    nav {
+        grid-template-columns: 4fr 3fr;
+    }
+}

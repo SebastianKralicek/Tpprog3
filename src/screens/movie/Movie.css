@@ -1,0 +1,77 @@
+.movie-detail {
+  background-color: #0b1117;
+  color: #cbd5e1;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+.movie-title {
+  color: #e5e7eb;
+  font-weight: 800;
+  font-size: 1.5rem;
+  margin: 0 0 16px;
+}
+
+.movie-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.poster {
+  width: 100%;
+  max-width: 520px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+}
+
+.info {
+  background-color: #0f171e;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.info h3 {
+  color: #e5e7eb;
+  margin-top: 0;
+}
+
+.description {
+  color: #a3b3c2;
+  line-height: 1.6;
+}
+
+#release-date,
+.length,
+#votes {
+  margin: 8px 0;
+}
+
+.btn-primary {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #1a98ff;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s ease, transform .05s ease;
+}
+
+.btn-primary:hover {
+  background: #0f84e5;
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+@media (min-width: 768px) {
+  .movie-layout {
+    grid-template-columns: 1fr 1.2fr;
+    align-items: start;
+  }
+}

@@ -76,41 +76,34 @@ class Movie extends Component {
     }
 
     return (
-      <React.Fragment>
-        <Navbar />
-        <h2 className="alert alert-primary">{pelicula.title}</h2>
-        <section className="row">
-          <img
-            className="col-md-6"
-            src={`https://image.tmdb.org/t/p/w500${pelicula.poster_path}`}
-            alt={pelicula.title}
-          />
-          <section className="col-md-6 info">
-            <h3>Descripción</h3>
-            <p className="description">{pelicula.overview}</p>
-            <p id="release-date">
-              <strong>Fecha de estreno:</strong> {pelicula.release_date}
-            </p>
-            <p className="length">
-              <strong>Duración:</strong> {pelicula.runtime} minutos
-            </p>
-            <p id="votes">
-              <strong>Puntuación:</strong> {pelicula.vote_average}
-            </p>
+     <React.Fragment>
+  <Navbar />
+  <h2 className="alert alert-primary">{pelicula.title}</h2>
+  <section className="row">
+    <img
+      className="col-md-6"
+      src={`https://image.tmdb.org/t/p/w500${pelicula.poster_path}`}
+      alt={pelicula.title}
+    />
+    <section className="col-md-6">
+      <h3>Descripción</h3>
+      <p>{pelicula.overview}</p>
+      <p><strong>Fecha de estreno:</strong> {pelicula.release_date}</p>
+      <p><strong>Duración:</strong> {pelicula.runtime} minutos</p>
+      <p><strong>Puntuación:</strong> {pelicula.vote_average}</p>
 
-            {/* 🔘 Botón dinámico de favoritos */}
-            {this.state.esFavorito ? (
-              <button onClick={() => this.quitarDeFavoritos()}>
-                Quitar de favoritos
-              </button>
-            ) : (
-              <button onClick={() => this.agregarAFavoritos()}>
-                Agregar a favoritos
-              </button>
-            )}
-          </section>
-        </section>
-      </React.Fragment>
+      {this.state.esFavorito ? (
+        <button className="btn btn-danger" onClick={() => this.quitarDeFavoritos()}>
+          Quitar de favoritos
+        </button>
+      ) : (
+        <button className="btn btn-success" onClick={() => this.agregarAFavoritos()}>
+          Agregar a favoritos
+        </button>
+      )}
+    </section>
+  </section>
+</React.Fragment>
     );
   }
 }
