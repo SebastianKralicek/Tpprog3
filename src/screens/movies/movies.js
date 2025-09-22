@@ -12,7 +12,7 @@ class Movies extends Component {
       populares: [],
       cartelera: [],
       valor: "",
-      visible: 8
+      visible: 5
     };
   }
 
@@ -28,7 +28,7 @@ class Movies extends Component {
   }
 
   cargarMas = () => {
-  this.setState({ visible: this.state.visible + 4 });
+  this.setState({ visible: this.state.visible + 5 });
 }
 
   componentDidMount() {
