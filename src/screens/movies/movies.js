@@ -16,8 +16,11 @@ class Movies extends Component {
     };
   }
 
-  evitarSubmit(event){
+  evitarSubmit(event) {
     event.preventDefault();
+    if (this.state.valor !== "") {
+      this.props.history.push(`/resultados-busqueda?query=${this.state.valor}`);
+    }
   }
 
   controlarCambios(event){
@@ -100,7 +103,7 @@ class Movies extends Component {
               onChange={(e) => this.controlarCambios(e)}
               value={this.state.valor}
             />
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Buscar" />
           </form>
 
           <section>
@@ -125,7 +128,7 @@ class Movies extends Component {
             onChange={(e) => this.controlarCambios(e)}
             value={this.state.valor}
           />
-          <input type="submit" value="Submit" />
+          <input type="submit" value="Buscar" />
         </form>
 
         <section>

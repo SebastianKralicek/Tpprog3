@@ -9,7 +9,8 @@ function Navbar(props){
 
         <b><li><Link to="/">Home</Link></li></b>
         <b><li><Link to="/favoritos">Favoritos</Link></li></b>
-        <b><li><Link to="/vertodas">Ver Todas</Link></li></b>
+        <b><li><Link to="/peliculas/cartelera">Peliculas en Cartelera</Link></li></b>
+        <b><li><Link to="/peliculas/populares">Peliculas Populares</Link></li></b>
 
 </ul>
 <ul className = "user">
