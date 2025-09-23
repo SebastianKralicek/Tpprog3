@@ -65,9 +65,7 @@ class Cards extends Component {
           return (
             <div key={peli.id} className="character-card">
               <img
-                src={`https://image.tmdb.org/t/p/w342${peli.poster_path}`}
-                alt={peli.title}
-              />
+                src={`https://image.tmdb.org/t/p/w342${peli.poster_path}`} alt={peli.title}/>
               <h3>{peli.title}</h3>
 
               <button onClick={() => this.descripcion(peli.id)}>
